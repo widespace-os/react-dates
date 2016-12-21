@@ -23,7 +23,9 @@ const propTypes = {
   onClearDates: PropTypes.func,
 
   startDate: PropTypes.string,
+  startDateValue: PropTypes.string,
   endDate: PropTypes.string,
+  endDateValue: PropTypes.string,
 
   isStartDateFocused: PropTypes.bool,
   isEndDateFocused: PropTypes.bool,
@@ -86,9 +88,10 @@ export default class DateRangePickerInput extends React.Component {
   }
 
   render() {
-    const { startDateString, endDateString, isClearDatesHovered } = this.state;
+    const { isClearDatesHovered } = this.state;
     const {
       startDate,
+      startDateValue,
       startDateId,
       startDatePlaceholderText,
       isStartDateFocused,
@@ -96,6 +99,7 @@ export default class DateRangePickerInput extends React.Component {
       onStartDateFocus,
       onStartDateShiftTab,
       endDate,
+      endDateValue,
       endDateId,
       endDatePlaceholderText,
       isEndDateFocused,
@@ -110,9 +114,6 @@ export default class DateRangePickerInput extends React.Component {
       phrases,
     } = this.props;
 
-    const startDateValue = startDate || startDateString;
-    const endDateValue = endDate || endDateString;
-
     return (
       <div
         className={cx('DateRangePickerInput', {
@@ -122,7 +123,8 @@ export default class DateRangePickerInput extends React.Component {
         <DateInput
           id={startDateId}
           placeholder={startDatePlaceholderText}
-          dateValue={startDateValue}
+          displayValue={startDate}
+          inputValue={startDateValue}
           focused={isStartDateFocused}
           disabled={disabled}
           required={required}
@@ -140,7 +142,8 @@ export default class DateRangePickerInput extends React.Component {
         <DateInput
           id={endDateId}
           placeholder={endDatePlaceholderText}
-          dateValue={endDateValue}
+          displayValue={endDate}
+          inputValue={endDateValue}
           focused={isEndDateFocused}
           disabled={disabled}
           required={required}
@@ -155,7 +158,7 @@ export default class DateRangePickerInput extends React.Component {
           <button
             type="button"
             className={cx('DateRangePickerInput__clear-dates', {
-              'DateRangePickerInput__clear-dates--hide': !(startDateValue || endDateValue),
+              'DateRangePickerInput__clear-dates--hide': !(startDate || endDate),
               'DateRangePickerInput__clear-dates--hover': isClearDatesHovered,
             })}
             onMouseEnter={this.onClearDatesMouseEnter}
