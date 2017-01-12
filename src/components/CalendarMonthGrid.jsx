@@ -9,6 +9,7 @@ import CalendarMonth from './CalendarMonth';
 
 import isTransitionEndSupported from '../utils/isTransitionEndSupported';
 import getTransformStyles from '../utils/getTransformStyles';
+import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 
 import OrientationShape from '../shapes/OrientationShape';
 
@@ -32,6 +33,7 @@ const propTypes = {
   onDayTouchTap: PropTypes.func,
   onMonthTransitionEnd: PropTypes.func,
   transformValue: PropTypes.string,
+  daySize: PropTypes.number,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -55,6 +57,7 @@ const defaultProps = {
   onDayTouchTap() {},
   onMonthTransitionEnd() {},
   transform: 'none',
+  daySize: 39,
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
@@ -106,6 +109,7 @@ export default class CalendarMonthGrid extends React.Component {
       monthFormat,
       orientation,
       transformValue,
+      daySize,
       onDayMouseEnter,
       onDayMouseLeave,
       onDayMouseDown,
@@ -133,6 +137,7 @@ export default class CalendarMonthGrid extends React.Component {
           modifiers={modifiers}
           monthFormat={monthFormat}
           orientation={orientation}
+          daySize={daySize}
           onDayMouseEnter={onDayMouseEnter}
           onDayMouseLeave={onDayMouseLeave}
           onDayMouseDown={onDayMouseDown}
@@ -146,17 +151,26 @@ export default class CalendarMonthGrid extends React.Component {
       month = month.clone().add(1, 'month');
     }
 
+    const isVertical = orientation === VERTICAL_ORIENTATION;
+
     const className = cx('CalendarMonthGrid', {
-      'CalendarMonthGrid--horizontal': orientation === HORIZONTAL_ORIENTATION,
-      'CalendarMonthGrid--vertical': orientation === VERTICAL_ORIENTATION,
+      'CalendarMonthGrid--horizontal': !isVertical,
+      'CalendarMonthGrid--vertical': isVertical,
       'CalendarMonthGrid--animating': isAnimating,
     });
+
+    const calendarMonthWidth = getCalendarMonthWidth(daySize);
+    const width = isVertical ? calendarMonthWidth : (numberOfMonths + 2) * calendarMonthWidth;
+    const style = {
+      ...getTransformStyles(transformValue),
+      width,
+    };
 
     return (
       <div
         ref={(ref) => { this.containerRef = ref; }}
         className={className}
-        style={getTransformStyles(transformValue)}
+        style={style}
         onTransitionEnd={onMonthTransitionEnd}
       >
         {months}

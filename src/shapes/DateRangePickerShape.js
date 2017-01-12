@@ -27,6 +27,8 @@ export default {
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
 
+  daySize: PropTypes.number,
+
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
   endDateId: PropTypes.string,

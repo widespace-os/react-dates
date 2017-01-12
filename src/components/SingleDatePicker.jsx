@@ -55,6 +55,8 @@ const defaultProps = {
   withFullScreenPortal: false,
   initialVisibleMonth: () => moment(),
 
+  daySize: 39,
+
   onPrevMonthClick() {},
   onNextMonthClick() {},
 
@@ -262,6 +264,7 @@ export default class SingleDatePicker extends React.Component {
       withFullScreenPortal,
       focused,
       initialVisibleMonth,
+      daySize,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
@@ -302,6 +305,7 @@ export default class SingleDatePicker extends React.Component {
           onOutsideClick={onOutsideClick}
           navPrev={navPrev}
           navNext={navNext}
+          daySize={daySize}
         />
 
         {withFullScreenPortal &&

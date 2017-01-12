@@ -17,6 +17,7 @@ const propTypes = {
   enableOutsideDays: PropTypes.bool,
   modifiers: PropTypes.object,
   orientation: OrientationShape,
+  daySize: PropTypes.number,
   onDayClick: PropTypes.func,
   onDayMouseDown: PropTypes.func,
   onDayMouseUp: PropTypes.func,
@@ -36,6 +37,7 @@ const defaultProps = {
   enableOutsideDays: false,
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
+  daySize: 39,
   onDayClick() {},
   onDayMouseDown() {},
   onDayMouseUp() {},
@@ -61,6 +63,7 @@ export default function CalendarMonth(props) {
     isVisible,
     modifiers,
     enableOutsideDays,
+    daySize,
     onDayClick,
     onDayMouseDown,
     onDayMouseUp,
@@ -93,8 +96,13 @@ export default function CalendarMonth(props) {
                   'CalendarMonth__day--outside': !day || day.month() !== month.month(),
                 }, modifiersForDay.map(mod => `CalendarMonth__day--${mod}`));
 
+                const daySizeStyles = {
+                  width: daySize,
+                  height: daySize - 1,
+                };
+
                 return (
-                  <td className={className} key={j}>
+                  <td className={className} key={j} style={daySizeStyles}>
                     {day &&
                       <CalendarDay
                         day={day}

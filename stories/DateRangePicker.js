@@ -111,6 +111,11 @@ storiesOf('DateRangePicker', module)
   .addWithInfo('3 months', () => (
     <DateRangePickerWrapper numberOfMonths={3} />
   ))
+  .addWithInfo('with custom day size', () => (
+    <DateRangePickerWrapper
+      daySize={50}
+    />
+  ))
   .addWithInfo('anchored right', () => (
     <div style={{ float: 'right' }}>
       <DateRangePickerWrapper
@@ -121,6 +126,12 @@ storiesOf('DateRangePicker', module)
   .addWithInfo('vertical', () => (
     <DateRangePickerWrapper
       orientation={VERTICAL_ORIENTATION}
+    />
+  ))
+  .addWithInfo('vertical with custom day size', () => (
+    <DateRangePickerWrapper
+      orientation={VERTICAL_ORIENTATION}
+      daySize={50}
     />
   ))
   .addWithInfo('vertical anchored right', () => (
